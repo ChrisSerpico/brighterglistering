@@ -14,5 +14,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlockWithItem(BrighterGlistering.GLISTERING_MELON.get(), models().cubeColumn(BrighterGlistering.GLISTERING_MELON.getRegisteredName(),
                 modLoc("block/glistering_melon_side"), modLoc("block/glistering_melon_top")));
+
     }
 }

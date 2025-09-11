@@ -23,5 +23,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(BrighterGlistering.GLISTERING_MELON.get());
         tag(BlockTags.GUARDED_BY_PIGLINS)
                 .add(BrighterGlistering.GLISTERING_MELON.get());
+        tag(BlockTags.MAINTAINS_FARMLAND)
+                .add(BrighterGlistering.ATTACHED_GLISTERING_MELON_STEM.get());
     }
 }
