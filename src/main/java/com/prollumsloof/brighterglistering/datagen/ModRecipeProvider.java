@@ -1,0 +1,32 @@
+package com.prollumsloof.brighterglistering.datagen;
+
+import com.prollumsloof.brighterglistering.BrighterGlistering;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Items;
+
+import java.util.concurrent.CompletableFuture;
+
+public class ModRecipeProvider extends RecipeProvider {
+    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries);
+    }
+
+    @Override
+    protected void buildRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BrighterGlistering.GLISTERING_MELON)
+                .pattern("GGG")
+                .pattern("GGG")
+                .pattern("GGG")
+                .define('G', Items.GLISTERING_MELON_SLICE)
+                .unlockedBy("has_glistering_melon_slice", has(Items.GLISTERING_MELON_SLICE))
+                .unlockedBy("has_glistering_melon", has(BrighterGlistering.GLISTERING_MELON))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GLISTERING_MELON_SLICE, 9)
+                .requires(BrighterGlistering.GLISTERING_MELON)
+                .unlockedBy("has_glistering_melon", has(BrighterGlistering.GLISTERING_MELON))
+                .unlockedBy("has_glistering_melon_slice", has(Items.GLISTERING_MELON_SLICE))
+                .save(recipeOutput, "glistering_melon_slice_from_glistering_melon");
+    }
+}

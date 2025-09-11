@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "brighterglistering:glistering_melon"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:glistering_melon_slice"
+  }
+}

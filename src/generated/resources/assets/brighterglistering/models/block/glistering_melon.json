@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "brighterglistering:block/glistering_melon_top",
+    "side": "brighterglistering:block/glistering_melon_side"
+  }
+}

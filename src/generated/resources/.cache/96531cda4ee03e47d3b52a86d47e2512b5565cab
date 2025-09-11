@@ -1,0 +1,4 @@
+// 1.21.1	2025-09-10T23:02:47.3682821	Tags for minecraft:block mod id brighterglistering
+425aacf0fcecab06979c21606073243e729339e9 data/minecraft/tags/block/guarded_by_piglins.json
+425aacf0fcecab06979c21606073243e729339e9 data/minecraft/tags/block/mineable/pickaxe.json
+425aacf0fcecab06979c21606073243e729339e9 data/minecraft/tags/block/needs_iron_tool.json
