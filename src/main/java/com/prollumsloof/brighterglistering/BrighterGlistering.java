@@ -5,9 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -30,7 +28,7 @@ import java.util.Random;
 @Mod(BrighterGlistering.MODID)
 public class BrighterGlistering {
     public static final String MODID = "brighterglistering";
-    public static final Logger LOGGER = LogUtils.getLogger();
+//    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
@@ -63,8 +61,8 @@ public class BrighterGlistering {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(GLISTERING_MELON_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.insertAfter(new ItemStack(Blocks.MELON), new ItemStack(GLISTERING_MELON.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 
