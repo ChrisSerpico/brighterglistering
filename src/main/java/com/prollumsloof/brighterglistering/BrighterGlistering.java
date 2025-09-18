@@ -1,6 +1,5 @@
 package com.prollumsloof.brighterglistering;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -12,7 +11,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
@@ -20,7 +21,6 @@ import net.neoforged.neoforge.event.level.block.CropGrowEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.slf4j.Logger;
 
 import java.util.Objects;
 import java.util.Random;
@@ -31,8 +31,6 @@ public class BrighterGlistering {
 //    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
-
     public static final DeferredBlock<Block> GLISTERING_MELON = BLOCKS.registerSimpleBlock("glistering_melon",
             BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK));
     public static final DeferredBlock<AttachedStemBlock> ATTACHED_GLISTERING_MELON_STEM = BLOCKS.register("attached_glistering_melon_stem",
@@ -42,17 +40,21 @@ public class BrighterGlistering {
                     net.minecraft.references.Items.MELON_SEEDS,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.ATTACHED_MELON_STEM)
             ));
+
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredItem<BlockItem> GLISTERING_MELON_ITEM = ITEMS.registerSimpleBlockItem("glistering_melon", GLISTERING_MELON);
 
     private final Random RANDOM = new Random();
 
-    public BrighterGlistering(IEventBus modEventBus) {
+    public BrighterGlistering(IEventBus modEventBus, ModContainer modContainer) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
 
         modEventBus.addListener(this::modifyDefaultComponents);
         modEventBus.addListener(this::addCreative);
         NeoForge.EVENT_BUS.addListener(this::onCropGrowEvent);
+
+        modContainer.registerConfig(ModConfig.Type.SERVER, BrighterGlisteringConfig.SPEC);
     }
 
     public void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
@@ -67,10 +69,16 @@ public class BrighterGlistering {
     }
 
     private void onCropGrowEvent(CropGrowEvent.Post event) {
+        int melonChance = BrighterGlisteringConfig.GLISTERING_MELON_CHANCE.getAsInt();
+
+        if (melonChance == 0) {
+            return;
+        }
+
         if (event.getState().getBlock() == Blocks.ATTACHED_MELON_STEM) {
             Direction facing = event.getState().getValue(HorizontalDirectionalBlock.FACING);
             BlockPos melonPos = event.getPos().relative(facing);
-            if (event.getLevel().getBlockState(melonPos).getBlock() == Blocks.MELON && RANDOM.nextInt(64) == 0) {
+            if (event.getLevel().getBlockState(melonPos).getBlock() == Blocks.MELON && RANDOM.nextInt(melonChance) == 0) {
                 event.getLevel().setBlock(event.getPos(), ATTACHED_GLISTERING_MELON_STEM.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, facing), 3);
                 event.getLevel().setBlock(melonPos, GLISTERING_MELON.get().defaultBlockState(), 3);
             }

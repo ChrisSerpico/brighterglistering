@@ -1,4 +1,7 @@
 {
+  "brighterglistering.configuration.title": "Better Glistering Melons Config Options",
+  "brighterglistering.configuration.glisteringMelonChance": "Glistering Melon Chance",
+
   "block.brighterglistering.glistering_melon": "Glistering Melon",
   "item.brighterglistering.glistering_melon": "Glistering Melon"
 }
